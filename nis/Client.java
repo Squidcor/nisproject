@@ -29,10 +29,11 @@ public class Client extends Thread {
             	 System.out.println("Attempting connection to " + serverName + " on " + port);
                  socket = new Socket(serverName, port);
                  
-                NetUtil.sendMessage("blar", socket);
-                System.out.println("Recieved: "+NetUtil.getString(socket));
-
-                
+                DiffieHellman keyExchange= new DiffieHellman(socket,16);
+                keyExchange.initialise();
+                keyExchange.generateKeyPair();
+                keyExchange.printKeys();
+               
 
                 break;
                 

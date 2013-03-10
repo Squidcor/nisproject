@@ -26,10 +26,11 @@ public class Server extends Thread {// The server thread, listens for incomming 
 
             while (listening) {
                 socket = serverSocket.accept();
-                System.out.println("Accepted");
+                System.out.println("Accepted Connection");
 
-                System.out.println("Recieved: " + NetUtil.getString(socket));
-                NetUtil.sendMessage("reply", socket);
+                DiffieHellman keyExchange = new DiffieHellman(socket,16);
+                keyExchange.generateKeyPair();
+                keyExchange.printKeys();
 
             }
 
