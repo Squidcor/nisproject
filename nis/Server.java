@@ -34,7 +34,13 @@ public class Server extends Thread {// The server thread, listens for incomming
 
 				RSAHandshake rsa = new RSAHandshake(socket);
 				rsa.serverHandshake();
-			}
+
+                String key = new String("0123456789abcdef");
+				byte[] keyBytes = key.getBytes("US-ASCII");
+				AES aesMachine = new AES(keyBytes);
+				byte[] plainText = aesMachine.receiveThenDecrypt(socket);
+				System.out.println(new String(plainText));
+            }
 
 			socket.getInputStream().close();
 			socket.getOutputStream().close();
