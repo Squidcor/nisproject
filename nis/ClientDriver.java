@@ -1,6 +1,7 @@
 package nis;
 
-public class ClientDriver {// Contains the main method to start the client kills it after 80 seconds
+public class ClientDriver {// Contains the main method to start the client kills
+							// it after 80 seconds
 
 	public static void main(String[] args) {
 		try {
