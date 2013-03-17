@@ -37,7 +37,7 @@ public class Client extends Thread {
 				byte[] keyBytes = key.getBytes("US-ASCII");
 				AES aesMachine = new AES(keyBytes);
 				byte[] plainText = "foo".getBytes("US-ASCII");
-				aesMachine.encryptThenSend(plainText, socket);
+				aesMachine.encryptThenSend(plainText, socket, true);
 				
 				break;
 

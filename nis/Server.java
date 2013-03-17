@@ -38,7 +38,7 @@ public class Server extends Thread {// The server thread, listens for incomming
                 String key = new String("0123456789abcdef");
 				byte[] keyBytes = key.getBytes("US-ASCII");
 				AES aesMachine = new AES(keyBytes);
-				byte[] plainText = aesMachine.receiveThenDecrypt(socket);
+				byte[] plainText = aesMachine.receiveThenDecrypt(socket, true);
 				System.out.println(new String(plainText));
             }
 

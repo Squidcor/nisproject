@@ -37,9 +37,11 @@ public class AES
 		
 	public void encryptThenSend(byte[] plainText, Socket sock, boolean verbose) {
 		if(verbose) {
+			System.out.println();
+			System.out.println("----------------------------------------------");
 			System.out.print("Performing AES encryption on plain text: ");
 			System.out.println(new String(plainText));
-			System.out.print("The byte representation is: ");
+			System.out.print("The byte representation of the plaintext is: ");
 			printBytes(plainText);
 			System.out.println();
 		}
@@ -79,6 +81,7 @@ public class AES
 			System.out.print("The final message is: ");
 			printBytes(cipherText);
 			System.out.println();
+			System.out.println("----------------------------------------------");
 		}
 		
 		// Send the message.
@@ -89,15 +92,42 @@ public class AES
 		}
 	}
 	
-	public byte[] receiveThenDecrypt(Socket sock) throws Exception {
+	public byte[] receiveThenDecrypt(Socket sock, boolean verbose) throws Exception {
+		// Get the cipher text.
 		byte[] cipherText = (byte[]) NetUtil.getMessage(sock);
+		if(verbose) {
+			System.out.println();
+			System.out.println("----------------------------------------------");
+			System.out.print("Performing AES decryption on received bytes: ");
+			printBytes(cipherText);
+			System.out.println();
+		}
 		
+		// Separate the IV and the message.
 		byte[] iv = Arrays.copyOfRange(cipherText, 0, 16);
 		byte[] messageCipherText = Arrays.copyOfRange(cipherText, 16, 
 				cipherText.length);
 		IvParameterSpec ivSpec = new IvParameterSpec(iv);
+		if(verbose) {
+			System.out.print("The IV is: ");
+			printBytes(iv);
+			System.out.println();
+			System.out.print("The cipher text is: ");
+			printBytes(messageCipherText);
+			System.out.println();
+		}
+
+		// Perform the decryption.
 		theCipher.init(javax.crypto.Cipher.DECRYPT_MODE, key, ivSpec);		
 		byte[] plainText = theCipher.doFinal(messageCipherText);
+		if(verbose) {
+			System.out.print("The decrypted bytes are: ");
+			printBytes(plainText);
+			System.out.println();
+			System.out.print("The string representation of these bytes is: ");
+			System.out.println(new String(plainText));
+			System.out.println("----------------------------------------------");
+		}
 		
 		return plainText;
 	}	
