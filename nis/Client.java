@@ -1,6 +1,5 @@
 package nis;
 
-import java.io.InputStream;
 import java.net.Socket;
 
 public class Client extends Thread {
@@ -31,12 +30,15 @@ public class Client extends Thread {
 				keyExchange.generateKeyPair();
 				keyExchange.printKeys();
 
+				RSAHandshake rsa = new RSAHandshake(socket);
+				rsa.clientHandshake();
+				
 				String key = new String("0123456789abcdef");
 				byte[] keyBytes = key.getBytes("US-ASCII");
 				AES aesMachine = new AES(keyBytes);
 				byte[] plainText = "foo".getBytes("US-ASCII");
 				aesMachine.encryptThenSend(plainText, socket);
-
+				
 				break;
 
 			}

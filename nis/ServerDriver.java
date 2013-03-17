@@ -2,7 +2,9 @@ package nis;
 
 public class ServerDriver {
 
-	public static void main(String[] args) {// Contains the main method to start the server, kills it after 120 seconds
+	public static void main(String[] args) {// Contains the main method to start
+											// the server, kills it after 120
+											// seconds
 		try {
 
 			Server server = new Server(32528);
